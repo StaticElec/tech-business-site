@@ -31,10 +31,10 @@
 
 // TODO: Your phone number in international format, digits only after the "+".
 // This is what phones actually dial. Example for a US number: "+15555550123".
-const PHONE = "+15555550123";
+const PHONE = "+14242450594";
 
 // TODO: The phone number as you want people to read it.
-const PHONE_DISPLAY = "(555) 555-0123";
+const PHONE_DISPLAY = "(424) 245-0594";
 
 export const site = {
   /* ---------------------------------------------------------------------------
@@ -43,21 +43,21 @@ export const site = {
 
   // TODO: Your business name. Appears in the header (if no logo), footer,
   // browser tab and search results.
-  name: "Your Business Name",
+  name: "Azrotek Computer Services",
 
   // TODO: The live web address of the site, with https:// and no trailing slash.
   // Used for canonical URLs, the sitemap and social-media previews.
-  url: "https://www.example.com",
+  url: "https://www.azrotek.com",
 
   // Language/region for the page and for date formatting on the blog.
   locale: "en-US",
 
   seo: {
     // TODO: Browser-tab / search-result title for the homepage.
-    title: "Your Business Name — Computer & Laptop Repair",
+    title: "Azrotek Computer Services",
     // TODO: One or two plain sentences shown under your link in search results.
     description:
-      "Local computer and laptop repair, Windows and software problems, upgrades, and data transfer. Call or send a message to get help.",
+      "Local computer and laptop repair, Windows and software problems, upgrades, and data transfer. Call or send a message to get help!",
     // Optional image shown when the site is shared on social media.
     // Put the file in public/ and give its path, e.g. "/og-image.jpg"
     // (1200 × 630 px works best). Leave empty ("") for none.
@@ -70,7 +70,7 @@ export const site = {
   structuredData: true,
 
   // TODO: Where you work. Shown in the hero and footer. Leave "" to hide.
-  serviceArea: "Serving [Your Town] and surrounding areas",
+  serviceArea: "Serving Sherman Oaks and surrounding areas",
 
   /* ---------------------------------------------------------------------------
      CONTACT
@@ -80,7 +80,7 @@ export const site = {
     phoneDisplay: PHONE_DISPLAY,
 
     // TODO (optional): Email address shown in the footer. Leave "" to hide.
-    email: "",
+    email: "admin@azrotek.com",
 
     // Label for every Call button. Where there's room, the phone number is
     // shown after it automatically (e.g. "Call (555) 555-0123").
@@ -112,7 +112,7 @@ export const site = {
     // Until the file exists, the business name is shown as text instead.
     logo: {
       src: "/src/assets/images/logo.png",
-      alt: "Your Business Name", // TODO: usually just your business name
+      alt: "AzroTek Computer Services", // TODO: usually just your business name
       // Height of the logo in the header, in pixels. Width follows the file.
       height: 44,
     },
