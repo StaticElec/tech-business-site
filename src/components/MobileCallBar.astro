@@ -1,0 +1,37 @@
+---
+/* Small Call/Message bar fixed to the bottom of phone-sized screens only.
+   Turn off with site.mobileBar.enabled in src/data/site.ts.
+   BaseLayout reserves space for it (--mobile-bar-height) so it never covers
+   the end of the page, and it respects the iPhone home-indicator area. */
+import ContactButtons from "./ContactButtons.astro";
+---
+
+<div class="mobile-bar">
+  <ContactButtons compact short number="never" class="mobile-bar__buttons" />
+</div>
+
+<style>
+  .mobile-bar {
+    display: none;
+  }
+
+  @media (max-width: 40rem) {
+    :global(:root) {
+      --mobile-bar-height: calc(3.75rem + env(safe-area-inset-bottom, 0px));
+    }
+    .mobile-bar {
+      display: block;
+      position: fixed;
+      inset: auto 0 0 0;
+      z-index: 50;
+      height: var(--mobile-bar-height);
+      padding: var(--space-2) var(--gutter) calc(var(--space-2) + env(safe-area-inset-bottom, 0px));
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+    }
+    .mobile-bar :global(.mobile-bar__buttons) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,63 @@
+---
+/* Closing call-to-action band. Content: site.finalCta + site.contact. */
+import { site } from "../data/site";
+import ContactButtons from "./ContactButtons.astro";
+
+const { heading, text } = site.finalCta;
+---
+
+<section class="final-cta" aria-labelledby="final-cta-heading">
+  <div class="container final-cta__inner">
+    <div class="final-cta__text">
+      <h2 id="final-cta-heading">{heading}</h2>
+      <p>{text}</p>
+    </div>
+    <ContactButtons tone="dark" class="final-cta__actions" />
+  </div>
+</section>
+
+<style>
+  .final-cta {
+    padding-block: clamp(var(--space-6), 3rem + 2vw, var(--space-8));
+    background: var(--color-green-900);
+    color: var(--color-on-dark);
+    border-top: 4px solid var(--color-green-500);
+    --color-focus: var(--color-focus-on-dark);
+  }
+  .final-cta__inner {
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+  }
+  .final-cta h2 {
+    color: var(--color-on-dark);
+    margin-bottom: var(--space-3);
+  }
+  .final-cta p {
+    margin: 0;
+    max-width: 36rem;
+    color: var(--color-on-dark-muted);
+    font-size: var(--text-lg);
+  }
+  .final-cta__inner :global(.final-cta__actions .button) {
+    min-height: 3.5rem;
+    padding-inline: var(--space-6);
+    font-size: 1.125rem;
+  }
+
+  @media (max-width: 30rem) {
+    .final-cta__inner :global(.final-cta__actions) {
+      flex-direction: column;
+    }
+    .final-cta__inner :global(.final-cta__actions .button) {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 60rem) {
+    .final-cta__inner {
+      grid-template-columns: 1fr auto;
+      gap: var(--space-7);
+    }
+  }
+</style>

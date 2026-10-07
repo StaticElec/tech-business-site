@@ -1,0 +1,75 @@
+---
+/* Compact footer. Content: site.name, site.footer, site.contact, site.social. */
+import { site } from "../data/site";
+
+const { phone, phoneDisplay, email } = site.contact;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__about">
+      <p class="site-footer__name">{site.name}</p>
+      {site.footer.text && <p>{site.footer.text}</p>}
+      {site.serviceArea && <p>{site.serviceArea}</p>}
+    </div>
+
+    <ul class="site-footer__links" aria-label="Contact and links">
+      <li><a href={`tel:${phone}`}>{phoneDisplay}</a></li>
+      {email && <li><a href={`mailto:${email}`}>{email}</a></li>}
+      {site.social.map((link) => <li><a href={link.href} rel="noopener">{link.label}</a></li>)}
+      <li><a href="/blog/">{site.footer.blogLabel}</a></li>
+    </ul>
+  </div>
+  <div class="container">
+    <p class="site-footer__copy">&copy; {year} {site.name}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: var(--space-6) var(--space-5);
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+  .site-footer p {
+    margin: 0;
+  }
+  .site-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-5) var(--space-7);
+  }
+  .site-footer__about {
+    display: grid;
+    gap: var(--space-1);
+  }
+  .site-footer__name {
+    color: var(--color-green-950);
+    font-size: var(--text-base);
+    font-weight: 700;
+  }
+  .site-footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .site-footer__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-green-800);
+    font-weight: 600;
+  }
+  .site-footer__copy {
+    margin-top: var(--space-5) !important;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+</style>

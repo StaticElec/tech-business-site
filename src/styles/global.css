@@ -1,0 +1,363 @@
+/* =============================================================================
+   GLOBAL STYLES
+   1. Design tokens (colors, spacing, sizes, timing) — change the look here.
+   2. Base element styles
+   3. Shared layout helpers and buttons
+   4. Article text (.prose) for blog posts
+   Section-specific styles live inside each component's <style> block.
+   ========================================================================== */
+
+/* 1. DESIGN TOKENS ---------------------------------------------------------- */
+:root {
+  /* Green palette */
+  --color-green-950: #0e2419;
+  --color-green-900: #143522;
+  --color-green-800: #1b4a30;
+  --color-green-700: #1f6139;
+  --color-green-600: #2a7a49;
+  --color-green-500: #3a9660;
+  --color-green-200: #bfdcc8;
+  --color-green-100: #e1efe5;
+  --color-green-50: #f2f8f3;
+
+  /* Neutrals and roles */
+  --color-background: #fbfcfa;
+  --color-surface: #ffffff;
+  --color-text: #18221c;
+  --color-muted: #4b5a51;
+  --color-border: #d6e0d9;
+  --color-border-strong: #a9bbae;
+  --color-on-dark: #ffffff;
+  --color-on-dark-muted: #c9ddcf;
+  --color-focus: #1f6139;
+  --color-focus-on-dark: #ffffff;
+
+  /* Typography (system fonts: no downloads, fast, familiar) */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);
+  --text-h3: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
+  --text-h2: clamp(1.625rem, 1.35rem + 1.1vw, 2.25rem);
+  --text-h1: clamp(2rem, 1.5rem + 2vw, 3rem);
+  --leading-tight: 1.15;
+  --leading-body: 1.6;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* Layout */
+  --max-width: 75rem; /* overall content width */
+  --max-width-text: 42rem; /* comfortable reading width */
+  --gutter: clamp(1rem, 4vw, 2rem); /* left/right page padding */
+  --section-space: clamp(3rem, 2rem + 4vw, 5.5rem); /* vertical space between sections */
+
+  /* Shape and motion */
+  --radius: 6px;
+  --radius-sm: 4px;
+  --shadow: 0 1px 2px rgb(14 36 25 / 0.08), 0 4px 12px rgb(14 36 25 / 0.06);
+  --tap-size: 48px; /* minimum height for buttons/links people tap */
+  --duration-fast: 150ms;
+  --duration-fade: 160ms; /* service tab fade; read by ServicesShowcase script */
+  --ease: ease-out;
+
+  /* Height of the fixed mobile call bar (0 when it's not shown) */
+  --mobile-bar-height: 0px;
+}
+
+/* 2. BASE ------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  overflow-wrap: break-word;
+  /* Keep content clear of the fixed mobile call bar */
+  padding-bottom: var(--mobile-bar-height);
+}
+
+main {
+  flex: 1;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 var(--space-4);
+  line-height: var(--leading-tight);
+  color: var(--color-green-950);
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-h1);
+  letter-spacing: -0.015em;
+}
+h2 {
+  font-size: var(--text-h2);
+  letter-spacing: -0.01em;
+}
+h3 {
+  font-size: var(--text-h3);
+}
+
+p {
+  margin: 0 0 var(--space-4);
+}
+
+a {
+  color: var(--color-green-700);
+  text-underline-offset: 0.15em;
+}
+a:hover {
+  color: var(--color-green-900);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+img {
+  height: auto;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: -100px;
+  z-index: 100;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-green-900);
+  color: var(--color-on-dark);
+  border-radius: var(--radius);
+}
+.skip-link:focus {
+  top: var(--space-2);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 3. LAYOUT HELPERS + BUTTONS ---------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: calc(var(--max-width) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-space);
+}
+
+.lead {
+  font-size: var(--text-lg);
+  color: var(--color-muted);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--tap-size);
+  padding: var(--space-2) var(--space-5);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  font: inherit;
+  font-weight: 650;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease);
+}
+.button svg {
+  flex-shrink: 0;
+  width: 1.15em;
+  height: 1.15em;
+}
+
+/* Solid green — the main action */
+.button--primary {
+  background: var(--color-green-700);
+  color: var(--color-on-dark);
+}
+.button--primary:hover {
+  background: var(--color-green-800);
+  color: var(--color-on-dark);
+}
+
+/* Outlined — the secondary action */
+.button--secondary {
+  background: var(--color-surface);
+  border-color: var(--color-green-700);
+  color: var(--color-green-800);
+}
+.button--secondary:hover {
+  background: var(--color-green-50);
+  color: var(--color-green-900);
+}
+
+/* Variants for dark green backgrounds */
+.button--light {
+  background: var(--color-surface);
+  color: var(--color-green-900);
+}
+.button--light:hover {
+  background: var(--color-green-100);
+  color: var(--color-green-950);
+}
+.button--outline-light {
+  border-color: var(--color-on-dark-muted);
+  color: var(--color-on-dark);
+}
+.button--outline-light:hover {
+  background: var(--color-green-800);
+  color: var(--color-on-dark);
+}
+
+/* 4. ARTICLE TEXT (blog posts rendered from Markdown) ---------------------- */
+.prose {
+  max-width: var(--max-width-text);
+}
+.prose > * + * {
+  margin-top: var(--space-4);
+}
+.prose p,
+.prose ul,
+.prose ol,
+.prose pre,
+.prose blockquote,
+.prose figure,
+.prose table {
+  margin-bottom: 0;
+}
+.prose h2 {
+  margin: var(--space-7) 0 0;
+  font-size: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
+}
+.prose h3 {
+  margin: var(--space-6) 0 0;
+  font-size: 1.25rem;
+}
+.prose h2 + *,
+.prose h3 + * {
+  margin-top: var(--space-3);
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.4em;
+}
+.prose li + li {
+  margin-top: var(--space-2);
+}
+.prose img {
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+}
+.prose figcaption,
+.prose em:only-child {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+.prose blockquote {
+  margin-inline: 0;
+  padding-left: var(--space-4);
+  border-left: 4px solid var(--color-green-200);
+  color: var(--color-muted);
+}
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+.prose :not(pre) > code {
+  padding: 0.1em 0.3em;
+  background: var(--color-green-50);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+.prose pre {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  overflow-x: auto;
+  border-radius: var(--radius);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  display: block;
+  overflow-x: auto;
+}
+.prose th,
+.prose td {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  text-align: left;
+}
+.prose th {
+  background: var(--color-green-50);
+}
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin-block: var(--space-6);
+}

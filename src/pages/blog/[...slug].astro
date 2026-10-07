@@ -1,0 +1,20 @@
+---
+/* One page per article in src/content/blog/. The URL is the file name:
+   src/content/blog/fixing-a-laptop.md  ->  /blog/fixing-a-laptop
+   Drafts get pages only during `npm run dev` (see src/lib/posts.ts). */
+import { render } from "astro:content";
+import BlogLayout from "../../layouts/BlogLayout.astro";
+import { getPosts, type Post } from "../../lib/posts";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props as { post: Post };
+const { Content } = await render(post);
+---
+
+<BlogLayout post={post}>
+  <Content />
+</BlogLayout>

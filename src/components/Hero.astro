@@ -1,0 +1,76 @@
+---
+/* Homepage hero: photo on the left, heading + text + Call/Message on the right.
+   On small screens the text comes first so the heading and buttons are
+   visible straight away, with the photo underneath. Content: site.hero. */
+import { site } from "../data/site";
+import ContactButtons from "./ContactButtons.astro";
+import Photo from "./Photo.astro";
+
+const { heading, text, image, imageAlt } = site.hero;
+---
+
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="container hero__inner">
+    <div class="hero__content">
+      <h1 id="hero-heading">{heading}</h1>
+      <p class="hero__text lead">{text}</p>
+      <ContactButtons class="hero__actions" />
+      {site.serviceArea && <p class="hero__area">{site.serviceArea}</p>}
+    </div>
+    <Photo
+      class="hero__media"
+      src={image}
+      alt={imageAlt}
+      label="Hero photo: you at work, your bench, or a repair in progress (landscape, 4:3)"
+      ratio={[4, 3]}
+      sizes="(min-width: 46rem) 600px, 100vw"
+      loading="eager"
+    />
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(var(--space-5), 4vw, var(--space-8));
+    background: var(--color-green-50);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .hero__inner {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+  }
+  .hero__content {
+    max-width: 34rem;
+  }
+  .hero__text {
+    margin-bottom: var(--space-5);
+  }
+  .hero__area {
+    margin: var(--space-4) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  /* Phones: buttons fill the width so they're easy to hit */
+  @media (max-width: 30rem) {
+    .hero__content :global(.hero__actions) {
+      flex-direction: column;
+    }
+    .hero__content :global(.hero__actions .button) {
+      width: 100%;
+    }
+  }
+
+  /* Tablet+: photo left, text right */
+  @media (min-width: 46rem) {
+    .hero__inner {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: clamp(var(--space-6), 5vw, var(--space-8));
+    }
+    .hero__inner > :global(.hero__media) {
+      grid-row: 1;
+      grid-column: 1;
+    }
+  }
+</style>

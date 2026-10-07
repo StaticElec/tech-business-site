@@ -1,0 +1,112 @@
+---
+/* Site header: logo on the left; Blog link and Call/Message on the right.
+   Small screens: logo, Blog and Call only (Message is in the hero and the
+   mobile call bar). Text comes from site.header / site.contact. */
+import { Image } from "astro:assets";
+import { site } from "../data/site";
+import { findImage } from "../lib/images";
+import ContactButtons from "./ContactButtons.astro";
+
+const { logo, blogLabel } = site.header;
+const logoImage = findImage(logo.src);
+const onBlog = Astro.url.pathname.startsWith("/blog");
+const blogIsCurrent = Astro.url.pathname.replace(/\/$/, "") === "/blog";
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-header__brand" href="/">
+      {
+        logoImage ? (
+          <Image
+            src={logoImage}
+            alt={logo.alt}
+            height={logo.height}
+            densities={[1, 2]}
+            loading="eager"
+            class="site-header__logo"
+          />
+        ) : (
+          <span class="site-header__name">{site.name}</span>
+        )
+      }
+    </a>
+
+    <div class="site-header__actions">
+      <nav aria-label="Main">
+        <a
+          class:list={["site-header__link", { "is-active": onBlog }]}
+          href="/blog/"
+          aria-current={blogIsCurrent ? "page" : undefined}>{blogLabel}</a
+        >
+      </nav>
+      <ContactButtons compact short number="wide" class="site-header__contact" />
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 4.25rem;
+    padding-block: var(--space-2);
+  }
+
+  .site-header__brand {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap-size);
+    min-width: 0;
+    color: var(--color-green-950);
+    text-decoration: none;
+  }
+  .site-header__logo {
+    width: auto;
+    max-height: 2.75rem;
+  }
+  .site-header__name {
+    font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.25rem);
+    font-weight: 750;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: clamp(var(--space-2), 2vw, var(--space-5));
+    flex-shrink: 0;
+  }
+
+  .site-header__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: var(--space-2);
+    color: var(--color-green-900);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+  }
+  .site-header__link:hover {
+    color: var(--color-green-700);
+    border-bottom-color: var(--color-green-200);
+  }
+  .site-header__link.is-active {
+    border-bottom-color: var(--color-green-600);
+  }
+
+  /* Phones: keep only the Call button next to Blog */
+  @media (max-width: 40rem) {
+    .site-header__actions :global(.button:last-child) {
+      display: none;
+    }
+  }
+</style>
